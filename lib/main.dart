@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:memory_game/widgets/score_board.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,8 +29,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 35, 38, 52),
+    // nasa igraona ploca mora biti jednaka screen_w*screen_w
+    double screen_w = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 17, 17, 27),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,19 +40,36 @@ class _HomePageState extends State<HomePage> {
           Center(
             child: Text(
               "Memory game",
-              style: TextStyle(
-                  fontSize: 48.6,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 205, 214, 244)),
+              style: GoogleFonts.montserrat(
+                fontSize: 50,
+                color: const Color.fromARGB(255, 205, 214, 244),
+              ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [],
+            children: [
+              // widget funckija za skor igre
+              scoreBoard("Tries", "0"),
+              scoreBoard("Score", "0"),
+            ],
+          ),
+          SizedBox(
+            height: screen_w,
+            width: screen_w,
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0,
+                ),
+                itemBuilder: (context, index) {
+                  return Container();
+                }),
           )
         ],
       ),
