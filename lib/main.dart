@@ -27,7 +27,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Game _game = Game ();
   @override
+  void initState(){
+    super.initState();
+    _game.initGame();
+
+  }
   Widget build(BuildContext context) {
     // nasa igraona ploca mora biti jednaka screen_w*screen_w
     double screen_w = MediaQuery.of(context).size.width;
@@ -61,15 +67,37 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: screen_w,
             width: screen_w,
+
             child: GridView.builder(
+              itemCount: _game.gameImg!.length
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
                 ),
+                padding: EdgeInsets.all(16.0),
                 itemBuilder: (context, index) {
-                  return Container();
-                }),
+                  return GestureDetector(
+
+                  )
+                    onTap(){
+
+                    }
+
+                    
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      decoration: BoxDecoration ,
+                      color: Color(0xFFFFB46A),
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage (
+                      image: AssetImage(_game.gameImg![index]),
+                      fit: BoxFit.cover,
+
+                      )
+
+                    )
+   } ),
           )
         ],
       ),
