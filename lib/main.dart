@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memory_game/widgets/score_board.dart';
+import 'package:memory_game/utils/game_logic.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,13 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
-// dodavanje elemenata igre
-
+// Widget početne strane naše memory igre
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -27,16 +27,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Game _game = Game ();
+  Game _game = Game();
+  // inicijalizacija podataka za pokušaje i score na 0
+  int tries = 0;
+  int score = 0;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _game.initGame();
-
   }
+
+  @override
   Widget build(BuildContext context) {
     // nasa igraona ploca mora biti jednaka screen_w*screen_w
-    double screen_w = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 17, 17, 27),
       body: Column(
@@ -45,60 +51,89 @@ class _HomePageState extends State<HomePage> {
         children: [
           Center(
             child: Text(
-              "Memory game",
-              style: GoogleFonts.montserrat(
-                fontSize: 50,
+              "Memory Game",
+              style: GoogleFonts.tsukimiRounded(
+                fontSize: 60,
+                fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(255, 205, 214, 244),
               ),
             ),
           ),
-          const SizedBox(
-            height: 24.0,
-          ),
+          const SizedBox(height: 24.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // widget funckija za skor igre
-              scoreBoard("Tries", "0"),
-              scoreBoard("Score", "0"),
+              // Widget funckija za skor igre
+              scoreBoard("Tries", tries.toString()),
+              scoreBoard("Score", score.toString()),
             ],
           ),
           SizedBox(
-            height: screen_w,
-            width: screen_w,
-
+            height: screenWidth,
+            width: screenWidth,
             child: GridView.builder(
-              itemCount: _game.gameImg!.length
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                ),
-                padding: EdgeInsets.all(16.0),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-
-                  )
-                    onTap(){
-
+              itemCount: _game.gameImg?.length ?? 0,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 16.0,
+                mainAxisSpacing: 16.0,
+              ),
+              padding: const EdgeInsets.all(16.0),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    if (_game.gameImg![index] != _game.hiddenCardpath) {
+                      // Ignorisati dodori ako je otkrivena karta već pritisnuta
+                      return;
                     }
 
-                    
-                    child: Container(
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration ,
-                      color: Color(0xFFFFB46A),
+                    setState(() {
+                      tries++;
+                      _game.gameImg![index] = _game.cardsList[index];
+                      _game.matchCheck.add({index: _game.cardsList[index]});
+                    });
+
+                    if (_game.matchCheck.length == 2) {
+                      // Provjera ako su dvije susjedne karte iste
+                      if (_game.matchCheck[0].values.first ==
+                          _game.matchCheck[1].values.first) {
+                        setState(() {
+                          // Povecanje score za 100
+                          score += 100;
+                          _game.matchCheck.clear();
+                        });
+                      } else {
+                        // Funckija koja daje korisniku 800ms vremena da vidi koja je druga karta ako nije pogodio
+                        Future.delayed(const Duration(milliseconds: 800), () {
+                          setState(() {
+                            _game.gameImg![_game.matchCheck[0].keys.first] =
+                                _game.hiddenCardpath;
+                            _game.gameImg![_game.matchCheck[1].keys.first] =
+                                _game.hiddenCardpath;
+                            _game.matchCheck.clear();
+                          });
+                        });
+                      }
+                    }
+                  },
+                  child: Container(
+                    // izgled jedne kocke
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 250, 179, 135),
                       borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage (
-                      image: AssetImage(_game.gameImg![index]),
-                      fit: BoxFit.cover,
-
-                      )
-
-                    )
-   } ),
-          )
+                      // unutar kontejnera ubacujemo sliku naših gemoetrijskih likova
+                      image: DecorationImage(
+                        image: AssetImage(_game.gameImg![index]),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

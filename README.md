@@ -1,16 +1,17 @@
 # memory_game
 
-A new Flutter project.
+## Šta je memory game?
 
-## Getting Started
+**Memory Game** je igra koja izaziva igrače da pronađu parove identičnih karata. Evo ključnih tačaka o igri:
 
-This project is a starting point for a Flutter application.
+1. **Cilj igre**: Podudariti parove karata sa istim slikama ili simbolima.
+2. **Način igre**: Karte su obično postavljene licem nadole, a igrači naizmenično otkrivaju dve karte u pokušaju da pronađu parove.
+3. **Zakonitost igre**: Ako se karte podudaraju, ostaju otkrivene; ako ne, vraćaju se na poziciju licem nadole.
+4. **Vještine**: Igra pomaže u razvoju memorije i koncentracije, jer igrači moraju da pamte pozicije karata.
+5. **Varijacije**: Može se igrati sa različitim brojem karata, temama i težinskim nivoima, što čini igru prikladnom za sve uzraste.
 
-A few resources to get you started if this is your first Flutter project:
+Igra se može igrati na fizičkim kartama ili kao digitalna verzija na računarima i mobilnim uređajima.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<div style="text-align: center;">
+  <img src="assets/images/app_preview.png" alt="App Preview">
+</div>

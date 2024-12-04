@@ -1,29 +1,34 @@
+import 'package:flutter/material.dart';
 
 class Game {
-  final String hiddenCardpath ='assets/images/hidden.png';
-   List <String>? gameImg;
-
-   final List <String> cards_list = [
-  "assets/image/circle.p",
-  "assets/image/triangle.p",
-  "assets/image/circle.p",
-  "assets/image/heart.p",
-  "assets/image/star.p",
-  "assets/image/triangle.p",
-  "assets/image/star.p",
-  "assets/image/heart.p",
-   ];
-   
-   List<Map<int, String>> matchCheck = [];
-
-
-
-
+  final Color hiddenCard = Colors.red;
+  List<Color>? gameColors;
+  List<String>? gameImg;
+  List<Color> cards = [
+    Colors.green,
+    Colors.yellow,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.blue
+  ];
+  final String hiddenCardpath = "assets/images/hidden.png";
+  List<String> cardsList = [
+    "assets/images/circle.png",
+    "assets/images/triangle.png",
+    "assets/images/circle.png",
+    "assets/images/heart.png",
+    "assets/images/star.png",
+    "assets/images/triangle.png",
+    "assets/images/star.png",
+    "assets/images/heart.png",
+  ];
   final int cardCount = 8;
+  List<Map<int, String>> matchCheck = [];
 
-  void initGame(){
-gameImg = List.generate(cardCount, (index)=> hiddenCardPath);
-
-
+  //methods
+  void initGame() {
+    gameColors = List.generate(cardCount, (index) => hiddenCard);
+    gameImg = List.generate(cardCount, (index) => hiddenCardpath);
   }
 }
