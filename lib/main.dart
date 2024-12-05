@@ -29,7 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Game _game = Game();
   // inicijalizacija podataka za pokušaje i score na 0
-  int tries = 0;
+  int moves = 0;
   int score = 0;
 
   @override
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Widget funckija za skor igre
-              scoreBoard("Tries", tries.toString()),
+              scoreBoard("Moves", moves.toString()),
               scoreBoard("Score", score.toString()),
             ],
           ),
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                     }
 
                     setState(() {
-                      tries++;
+                      moves++;
                       _game.gameImg![index] = _game.cardsList[index];
                       _game.matchCheck.add({index: _game.cardsList[index]});
                     });
@@ -139,3 +139,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
