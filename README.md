@@ -12,6 +12,8 @@
 
 Igra se može igrati na fizičkim kartama ili kao digitalna verzija na računarima i mobilnim uređajima.
 
+Dodano je više ploča kao i efekat kada se dodirne na ploču i muzika
+
 <div style="text-align: center;">
   <img src="assets/images/app_preview.png" alt="App Preview">
 </div>
